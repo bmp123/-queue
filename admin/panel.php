@@ -11,14 +11,14 @@
 </head>
 <body>
 	<header>
-		<b>Какое то предложение</b>
+		<b>Какое то предложение</b> <a href="?url=destroySession">Выйти</a>
 	</header>
 	<div id="menu">
 		<ul>
 			<li><a href="">Главная</a></li>
 			<li><a href="?url=addServices">Добавить услугу</a></li>
 			<li><a href="?url=myData">Личные данные</a></li>
-			<li><a href="">Заявки</a></li>
+			<li><a href="?url=viewOrders">Заявки</a></li>
 		</ul>	
 	</div>
 	<div id="body">

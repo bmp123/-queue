@@ -1,5 +1,5 @@
 <?
-include("../assets/functions.php.php");
+require_once("../assets/functions.php");
 $email = $_POST['email'];
 $password = $_POST['pass'];
 $result = Gets::authAdmin($email, $password);

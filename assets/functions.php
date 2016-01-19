@@ -154,6 +154,24 @@ class Gets extends db
 		return $i;
 	}
 
+	static function destroySession ()
+	{
+		session_start();
+		session_destroy();
+		$view = '<script language="JavaScript">window.location.href = "http://www.u.ru/admin/"</script>';
+		return $view;
+	}
+
+	static function getOrders () 
+	{
+		session_start();
+    	$id = $_SESSION['id'];
+    	$sql = "SELECT * FROM orders WHERE adm_id = '$id'";
+    	if($result = self::getSql($sql)) $row = mysqli_fetch_assoc($result);
+
+    	return $row;
+	}
+
 	static function addServices ()
 	{
 		$view .= '<div id="form-add-service">';
@@ -190,6 +208,19 @@ class Gets extends db
 
 		return $view;
 	}
+
+	static function viewOrders () 
+  	{ 	
+  		$result = self::getOrders();
+    	$view .='<div id="form-my-data">';
+		$view .='<p>'.$result['o_name'].'</p>';
+		$view .='<p>'.$result['o_number'].'</p>';
+		$view .='<p>'.$result['o_service'].'</p>';
+		$view .='<p>'.$result['o_comment'].'</p>';
+		$view .='<div id="error"></div></div>';
+
+    	return $view;
+  	}
 
 }
 ?>

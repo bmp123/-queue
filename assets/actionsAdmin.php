@@ -25,6 +25,7 @@ class actionsAdmin extends Gets
 
     return $i;
   }
+
   function updateAdminData ($name, $password, $email, $number) 
   {
     session_start();
@@ -36,6 +37,7 @@ class actionsAdmin extends Gets
 
     return $i;
   }
+
 }
 
 ?>

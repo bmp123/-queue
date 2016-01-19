@@ -28,6 +28,7 @@ $('#btn_sub').click(function(){
     	url : 'auth.php',
     	data : {email:email,pass:pass},
     	success : function(data) {
+    		console.log(data);
     		if (data==1) {            
     			window.location.href = "http://www.u.ru/admin/panel.php";
     		}else if(data==2){

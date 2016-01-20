@@ -15,7 +15,7 @@ if (isset($_POST['service_name'])) {
 	$areal = $_POST['areal'];
 	$country = $_POST['country'];
 	$category = $_POST['category'];
-	$cat_id = $_POST['cat_id'];
+	$category_id = $_POST['cat_id'];
 	$result = actionsAdmin::add_service($name, $min_desc, $full_desc, $city, $areal, $country, $category, $category_id);
 	if ($result == 1) echo 1;
 	if ($result == 2) echo 2;

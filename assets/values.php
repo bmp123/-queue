@@ -30,10 +30,10 @@ class Values extends Gets
             // Если нет, то добавим порт в URL
             $result .= ':'.$_SERVER['SERVER_PORT'];
         }
-        $url .= '<link rel="stylesheet" type="text/css" href="'.$result.'/css/main.css">';
-        $url .= "<link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>";
-        $url .= '<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>';
         $url .='<meta charset="utf-8">';
+        $url .='<link rel="stylesheet" type="text/css" href="'.$result.'/css/main.css">';
+        $url .="<link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>";
+        $url .='<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>';
         return $url;
     }
     function session () 

@@ -1,7 +1,5 @@
 <?php header('Content-Type: text/html; charset=utf-8'); ?>
-<?php session_start();?>
 <?php require_once("assets/values.php"); ?>
-<?php require_once("assets/functions.php"); ?>
 <!DOCTYPE html>
 <html>
 <head lang="ru">
@@ -30,7 +28,7 @@
 		</ul>	
 	</div> -->
 	<div id="body">
-		<?if (isset($_GET['url'])) $view = Values::getFun(); else $view = Gets::viewCategory();?>
+		<?if (isset($_GET['url'])) $view = Values::getFun(); if(!isset($_GET['url'])) $view = Values::viewCategory();?>
 		<? echo "$view"; ?>
 	</div>
 	<footer>

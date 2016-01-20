@@ -20,48 +20,6 @@ class Gets extends db
 		mysqli_close($link); 
 	}
 
-	static function viewAdminData ()
-	{	
-		session_start();
-		$table = "admins";
-		$id = $_SESSION['id'];
-		$sql = "SELECT * FROM ".$table." WHERE adm_id = '".$id."' ";
-		$result = self::getSql($sql);
-		$row = mysqli_fetch_assoc($result);
-
-		$view .= "<input type=\"text\" id=\"adm_name\" value=\"".$row['adm_name']."\">";
-		$view .= "<input type=\"password\" id=\"adm_password\" value=\"".$row['adm_password']."\">";
-		$view .= "<input type=\"text\" id=\"adm_email\" value=\"".$row['adm_email']."\">";
-		$view .= "<input type=\"text\" id=\"adm_number\" value=\"".$row['adm_number']."\">"; 
-		$view .= "<button id=\"btn_save\">Сохранить</button>";
-
-		return $view;
-	}
-
-	static function authAdmin ($email, $password)
-	{	
-		session_start();
-		$table = "admins";
-		$sql = "SELECT * FROM ".$table." WHERE adm_email = '".$email."'";
-		if (!empty($email) && !empty($password)) {
-			$result = self::getSql($sql);
-			$row = mysqli_fetch_assoc($result);
-      		
-      		$password2 = $row['adm_password'];
-      		if ($password == $password2) {
-        		$_SESSION['email'] = $row['adm_email'];
-        		$_SESSION['password'] = $row['adm_password'];
-        		$_SESSION['id'] = $row['adm_id'];
-        		$i = 1;
-      		}else{
-        		$i = 2;
-      		}	
-    	}else{
-      		$i = 2;
-    	}
-    	return $i;
-	}
-
 	static function viewIndividual ()
 	{	
 		$table = "services";
@@ -104,19 +62,15 @@ class Gets extends db
 
 	static function viewCategory ()
 	{
-		$table = "category";
-		$tableCol = "services";
-		$sql = 'SELECT * FROM '.$table.' GROUP BY `cat_name` ORDER BY `cat_name` ASC';
+		$table = "category,services";
+		$sql = 'SELECT * FROM '.$table.' GROUP BY `cat_name` ORDER BY `cat_name` ASC ';
 		$result = self::getSql($sql);
 		$row = mysqli_fetch_assoc($result);
 
 		$view .="<div id=\"category\"><ul>";
 		do{ 
-			$name = $row['cat_name'];
-			$sqlCol = "SELECT * FROM ".$tableCol." WHERE s_cat = '".$name."'";
-			$resultCol = self::getSql($sqlCol);
-			$rowCol = mysqli_num_rows($resultCol);
-			if ($rowCol != 0) $view .= "<li><a href=\"?url=viewServices&&id=".$row['cat_id']."\">".$row['cat_name']."</a><div>".$rowCol."</div></li>"; 
+			$num = $row['col_services'];
+			if ($num != 0) $view .= "<li><a href=\"?url=viewServices&&id=".$row['cat_id']."\">".$row['cat_name']."</a><div>".$num."</div></li>"; 
 		} while ($row = mysqli_fetch_assoc($result));
 		$view .= "</ul></div>";
 
@@ -136,6 +90,7 @@ class Gets extends db
 
 		return $view;
 	}
+
 	static function registerPartner ($name, $password, $email, $number)
 	{
 		$table = "admins";
@@ -162,16 +117,6 @@ class Gets extends db
 		return $view;
 	}
 
-	static function getOrders () 
-	{
-		session_start();
-    	$id = $_SESSION['id'];
-    	$sql = "SELECT * FROM orders WHERE adm_id = '$id'";
-    	if($result = self::getSql($sql)) $row = mysqli_fetch_assoc($result);
-
-    	return $row;
-	}
-
 	static function addServices ()
 	{
 		$view .= '<div id="form-add-service">';
@@ -196,31 +141,6 @@ class Gets extends db
 
 		return $view;
 	}
-
-	static function myData ()
-	{	
-		$view .='<div id="form-my-data">';
-		$view .= self::viewAdminData();
-		$view .='<? echo "$view";?>';
-		$view .='<div id="quest" style="display:none;"><p>Ваши Данные Будут изменены! Вы уверенны, что хотите сохранить данные?</p>';
-		$view .='<button id="yes">Сохранить</button><button id="no">Отменить</button></div>';
-		$view .='<div id="error"></div></div>';
-
-		return $view;
-	}
-
-	static function viewOrders () 
-  	{ 	
-  		$result = self::getOrders();
-    	$view .='<div id="form-my-data">';
-		$view .='<p>'.$result['o_name'].'</p>';
-		$view .='<p>'.$result['o_number'].'</p>';
-		$view .='<p>'.$result['o_service'].'</p>';
-		$view .='<p>'.$result['o_comment'].'</p>';
-		$view .='<div id="error"></div></div>';
-
-    	return $view;
-  	}
 
 }
 ?>

@@ -2,7 +2,7 @@
 <?php session_start() ?>
 <?php require_once("../assets/values.php"); ?>
 
-<? $flag = Values::session(); if($flag){ ?>
+<? if(Values::session()){ ?>
 <!DOCTYPE html>
 <html>
 <head lang="ru">
@@ -22,7 +22,7 @@
 		</ul>	
 	</div>
 	<div id="body">
-		<?if (isset($_GET['url'])) $view = Values::getFun(); echo "$view";?>
+		<?if (isset($_GET['url'])) echo Values::getFun(); ?>
 	</div>
 	<footer>
 		

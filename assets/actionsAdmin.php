@@ -9,7 +9,7 @@ class actionsAdmin extends Gets
   
   function add_category($name)
   {
-    $sql = "INSERT INTO category (cat_name) VALUES ('$name')";
+    $sql = "INSERT INTO category (cat_name,col_services) VALUES ('$name','1')";
     if($result = self::getSql($sql)) $i = 1; 
     else $i = 2;
 
@@ -23,7 +23,11 @@ class actionsAdmin extends Gets
     $sql = "SELECT * FROM ".$table." WHERE cat_id =  '".$id."' ORDER BY  `s_cat` ASC";
     $result = self::getSql($sql);
     if($row = mysqli_num_rows($result)){
+<<<<<<< HEAD
       $row += 1;
+=======
+      $row+=1;
+>>>>>>> dev
       if($sql_col = "UPDATE category SET col_services = '$row' WHERE cat_id = '$id'"){
         $col = self::getSql($sql_col);
         $i = 1;
@@ -88,6 +92,7 @@ class actionsAdmin extends Gets
     return $view;
     }
 
+<<<<<<< HEAD
   static function authAdmin ($email, $password)
   { 
     session_start();
@@ -111,6 +116,31 @@ class actionsAdmin extends Gets
       }
       return $i;
   }
+=======
+    static function authAdmin ($email, $password)
+    {  
+        session_start();
+        $table = "admins";
+        $sql = "SELECT * FROM ".$table." WHERE adm_email = '".$email."'";
+        if (!empty($email) && !empty($password)) {
+            $result = Gets::getSql($sql);
+            $row = mysqli_fetch_assoc($result);
+          
+            $password2 = $row['adm_password'];
+            if ($password == $password2) {
+                $_SESSION['email'] = $row['adm_email'];
+                $_SESSION['password'] = $row['adm_password'];
+                $_SESSION['id'] = $row['adm_id'];
+                $i = 1;
+            }else{
+                $i = 2;
+            } 
+        }else{
+            $i = 2;
+        }
+        return $i;
+    }
+>>>>>>> dev
 
   static function getOrders () 
   {

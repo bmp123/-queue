@@ -84,13 +84,27 @@ header > a{
 	height: 350px;
 }
 #search-panel{
-	width: 800px;
+	width: 70%;
 	height: 150px;
 	background: #ffffff;
 	position: absolute;
 	left: 50%;
-	margin: 150px -400px;
+	margin: 150px -35%;
+	border-radius: 3px;
 }
 .search-inp{
 	cursor: pointer;
+	border: 1px solid #9E9E9E;
+	border-radius: 3px;
+	background: #EEEEEE;
+}
+#search-category{
+	width: 60%;
+	height: 30px;
+	margin: 60px 20px;
+}
+#search-city{
+	width: 150px;
+	height: 30px;
+	margin: 60px 0px;
 }

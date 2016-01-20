@@ -91,6 +91,7 @@ header > a{
 	left: 50%;
 	margin: 150px -35%;
 	border-radius: 3px;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
 }
 .search-inp{
 	cursor: pointer;
@@ -98,13 +99,36 @@ header > a{
 	border-radius: 3px;
 	background: #EEEEEE;
 }
+.search-inp:focus{
+	cursor: text;
+}
 #search-category{
-	width: 60%;
+	width: 55%;
 	height: 30px;
 	margin: 60px 20px;
 }
 #search-city{
-	width: 150px;
+	width: 15%;
 	height: 30px;
 	margin: 60px 0px;
+}
+#btn-search{
+	width: 10%;
+	height: 30px;
+	border: none;
+	border-radius: 3px;
+	background: #673AB7;
+	color: #ffffff;
+	margin-left: 20px;
+}
+#btn-search:hover{
+	cursor: pointer;
+	background: #9575CD;
+}
+#btn-search:active{
+	box-shadow: 0px 4px 37px -15px #000000 inset;
+	background: #673AB7;
+}
+#btn-search:focus{
+	outline: none;
 }

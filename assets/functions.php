@@ -48,7 +48,7 @@ class Gets extends db
 		$result = self::getSql($sql);
 		$row = mysqli_fetch_assoc($result);
 
-		$view .= "<p>".$row['s_cat']."</p><div id=\"wrapper_cat\">";
+		$view .= "<a href='?url=home'>Главная</a>/<a href='?url=viewServices&&id=".$id."'>".$row['s_cat']."</a><div id=\"wrapper_cat\">";
 		do{ 
 			$view .= "<div class=\"cat_divs\">";
 			$view .= "<p>".$row['s_name']."</p>";
@@ -70,7 +70,7 @@ class Gets extends db
 		$view .="<div id=\"category\"><ul>";
 		do{ 
 			$num = $row['col_services'];
-			if ($num != 0) $view .= "<li><a href=\"?url=viewServices&&id=".$row['cat_id']."\">".$row['cat_name']."</a><div>".$num."</div></li>"; 
+			if ($num > 1) { $num-= 1; $view .= "<li><a href=\"?url=viewServices&&id=".$row['cat_id']."\">".$row['cat_name']."</a><div>".$num."</div></li>";} 
 		} while ($row = mysqli_fetch_assoc($result));
 		$view .= "</ul></div>";
 
@@ -139,6 +139,11 @@ class Gets extends db
 		$view .= '<div id="error"></div>';
 		$view .= '</div>';
 
+		return $view;
+	}
+	static function home ()
+	{
+		$view = '<script language="JavaScript">window.location.href = "http://www.u.ru"</script>';
 		return $view;
 	}
 

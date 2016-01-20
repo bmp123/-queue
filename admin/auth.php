@@ -1,8 +1,8 @@
 <?
-require_once("../assets/functions.php");
+require_once("../assets/actionsAdmin.php"); 
 $email = $_POST['email'];
 $password = $_POST['pass'];
-$result = Gets::authAdmin($email, $password);
+$result = actionsAdmin::authAdmin($email, $password);
 if ($result == 1) echo 1;
 if ($result == 2) echo 2;
 ?>

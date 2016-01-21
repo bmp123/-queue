@@ -31,19 +31,7 @@
 		</ul>	
 	</div> -->
 	<div id="body">
-<<<<<<< HEAD
-		<?if (isset($_GET['url'])) $view = Values::getFun(); if(!isset($_GET['url'])) $view = Values::viewCategory();?>
-		<? echo "$view"; ?>
-=======
 		<?if (isset($_GET['url'])) echo Values::getFun(); if(!isset($_GET['url'])) echo Values::viewCategory();?>
-<<<<<<< HEAD
->>>>>>> dev
-=======
-
-		<div>
-			
-		</div>
->>>>>>> dev
 	</div>
 	<footer>
 		<p class="copyright">&copy; Ivan Danilov</p>

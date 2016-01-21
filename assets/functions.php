@@ -55,7 +55,6 @@ class View extends db
 		$view .="<div id=\"category\"><ul>";
 		do{ 
 			$num = $row['col_services'];
-			if ($num != 0) $view .= "<li><a href=\"?url=viewServices&&id=".$row['cat_id']."\">".$row['cat_name']."</a><div>".$num."</div></li>"; 
 			if ($num > 1) { $num-= 1; $view .= "<li><a href=\"?url=viewServices&&id=".$row['cat_id']."\">".$row['cat_name']."</a><div>".$num."</div></li>";} 
 		} while ($row = mysqli_fetch_assoc($result));
 		$view .= "</ul></div>";

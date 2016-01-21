@@ -32,6 +32,10 @@
 	</div> -->
 	<div id="body">
 		<?if (isset($_GET['url'])) echo Values::getFun(); if(!isset($_GET['url'])) echo Values::viewCategory();?>
+
+		<div>
+			
+		</div>
 	</div>
 	<footer>
 		<p class="copyright">&copy; Ivan Danilov</p>

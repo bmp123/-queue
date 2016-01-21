@@ -2,9 +2,9 @@
 /**
 * Операции в админке
 */
-include("functions.php");
+include("db.php");
 
-class actionsAdmin extends Gets
+class actionsAdmin extends db
 {
   
   function add_category($name)
@@ -58,43 +58,13 @@ class actionsAdmin extends Gets
     return $i;
   }
 
-  static function myData ()
-  { 
-    $view .='<div id="form-my-data">';
-    $view .= self::viewAdminData();
-    $view .='<? echo "$view";?>';
-    $view .='<div id="quest" style="display:none;"><p>Ваши Данные Будут изменены! Вы уверенны, что хотите сохранить данные?</p>';
-    $view .='<button id="yes">Сохранить</button><button id="no">Отменить</button></div>';
-    $view .='<div id="error"></div></div>';
-
-    return $view;
-  }
-
-    static function viewAdminData ()
-    { 
-    session_start();
-    $table = "admins";
-    $id = $_SESSION['id'];
-    $sql = "SELECT * FROM ".$table." WHERE adm_id = '".$id."' ";
-    $result = Gets::getSql($sql);
-    $row = mysqli_fetch_assoc($result);
-
-    $view .= "<input type=\"text\" id=\"adm_name\" value=\"".$row['adm_name']."\">";
-    $view .= "<input type=\"password\" id=\"adm_password\" value=\"".$row['adm_password']."\">";
-    $view .= "<input type=\"text\" id=\"adm_email\" value=\"".$row['adm_email']."\">";
-    $view .= "<input type=\"text\" id=\"adm_number\" value=\"".$row['adm_number']."\">"; 
-    $view .= "<button id=\"btn_save\">Сохранить</button>";
-
-    return $view;
-    }
-
     static function authAdmin ($email, $password)
     {  
         session_start();
         $table = "admins";
         $sql = "SELECT * FROM ".$table." WHERE adm_email = '".$email."'";
         if (!empty($email) && !empty($password)) {
-            $result = Gets::getSql($sql);
+            $result = self::getSql($sql);
             $row = mysqli_fetch_assoc($result);
           
             $password2 = $row['adm_password'];
@@ -110,29 +80,6 @@ class actionsAdmin extends Gets
             $i = 2;
         }
         return $i;
-    }
-
-  static function getOrders () 
-  {
-    session_start();
-      $id = $_SESSION['id'];
-      $sql = "SELECT * FROM orders WHERE adm_id = '$id'";
-      if($result = Gets::getSql($sql)) $row = mysqli_fetch_assoc($result);
-
-      return $row;
-  }
-
-    static function viewOrders () 
-    {   
-      $result = self::getOrders();
-      $view .='<div id="form-my-data">';
-    $view .='<p>'.$result['o_name'].'</p>';
-    $view .='<p>'.$result['o_number'].'</p>';
-    $view .='<p>'.$result['o_service'].'</p>';
-    $view .='<p>'.$result['o_comment'].'</p>';
-    $view .='<div id="error"></div></div>';
-
-      return $view;
     }
 
 }

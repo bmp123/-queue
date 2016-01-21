@@ -3,24 +3,10 @@ include ("db.php");
 /**
 * Класс вывода данных из бд
 */
-class Gets extends db 
+class View extends db 
 {
-	function getSql ($sql)
-	{
-		$link = db::dbConnect();
-		/* Посылаем запрос серверу */ 
-		if ($result = mysqli_query($link, $sql)) { 
-    		/* Выборка результатов запроса */ 
-    		return $result;
-    		/* Освобождаем используемую память */ 
-    		mysqli_free_result($result); 
-		} 
 
-		/* Закрываем соединение */ 
-		mysqli_close($link); 
-	}
-
-	static function viewIndividual ()
+	public function viewIndividual ()
 	{	
 		$table = "services";
 		$id = $_GET['id'];
@@ -40,7 +26,7 @@ class Gets extends db
 		return $view;
 	}
 
-	static function viewServices ()
+	public function viewServices ()
 	{
 		$table = "services";
 		$id = $_GET['id'];
@@ -60,12 +46,11 @@ class Gets extends db
 		return $view;
 	}
 
-	static function viewCategory ()
+	public function viewCategory ()
 	{
-		$table = "category,services";
-		$sql = 'SELECT * FROM '.$table.' GROUP BY `cat_name` ORDER BY `cat_name` ASC ';
-		$result = self::getSql($sql);
-		$row = mysqli_fetch_assoc($result);
+		$table  = "category,services";
+		$result    = db::getCategory($table);
+		$row    =  mysqli_fetch_assoc($result);
 
 		$view .="<div id=\"category\"><ul>";
 		do{ 
@@ -77,12 +62,11 @@ class Gets extends db
 		return $view;
 	}
 
-	static function viewCategoryOptions ()
+	public function viewCategoryOptions ()
 	{
-		$table = "category";
-		$sql = 'SELECT * FROM '.$table.' GROUP BY `cat_name` ORDER BY `cat_name` ASC';
-		$result = self::getSql($sql);
-		$row = mysqli_fetch_assoc($result);
+		$table  = "category";
+		$result    = db::getCategory($table);
+		$row    =  mysqli_fetch_assoc($result);
 
 		do{ 
 			$view .= "<option name=\"".$row['cat_id']."\" value=\"".$row['cat_id']."\">".$row['cat_name']."</option>"; 
@@ -91,14 +75,14 @@ class Gets extends db
 		return $view;
 	}
 
-	static function registerPartner ($name, $password, $email, $number)
+	public function registerPartner ($name, $password, $email, $number)
 	{
 		$table = "admins";
-		$sql = "SELECT * FROM admins WHERE adm_email ='".$email."' LIMIT 1 ";
+		$sql = 'SELECT * FROM '.$table.' WHERE adm_email ='.$email.' LIMIT 1 ';
 		$result = self::getSql($sql);
 
 		if(mysqli_num_rows($result)==0){
-			$sql = "INSERT INTO ".$table." (adm_name,adm_password,adm_email,adm_number)
+			$sql = "INSERT INTO '".$table."' (adm_name,adm_password,adm_email,adm_number)
 					VALUES ('$name',$password,'$email','$number')";
         	if($result = self::getSql($sql)){
           		$i = 1;
@@ -109,15 +93,7 @@ class Gets extends db
 		return $i;
 	}
 
-	static function destroySession ()
-	{
-		session_start();
-		session_destroy();
-		$view = '<script language="JavaScript">window.location.href = "http://www.u.ru/admin/"</script>';
-		return $view;
-	}
-
-	static function addServices ()
+	public function addServices ()
 	{
 		$view .= '<div id="form-add-service">';
 		$view .= '<select id="s_category" name="category" size="1">';
@@ -141,11 +117,50 @@ class Gets extends db
 
 		return $view;
 	}
-	static function home ()
-	{
-		$view = '<script language="JavaScript">window.location.href = "http://www.u.ru"</script>';
-		return $view;
-	}
 
+	public function myData ()
+  	{ 
+    	$view .='<div id="form-my-data">';
+    	$view .= self::viewAdminData();
+    	$view .='<? echo "$view";?>';
+    	$view .='<div id="quest" style="display:none;"><p>Ваши Данные Будут изменены! Вы уверенны, что хотите сохранить данные?</p>';
+    	$view .='<button id="yes">Сохранить</button><button id="no">Отменить</button></div>';
+    	$view .='<div id="error"></div></div>';
+
+    	return $view;
+  	}
+
+    public function viewAdminData ()
+    { 
+    	session_start();
+    	$table = "admins";
+    	$id = $_SESSION['id'];
+    	$sql = "SELECT * FROM ".$table." WHERE adm_id = '".$id."' ";
+    	$result = self::getSql($sql);
+    	$row = mysqli_fetch_assoc($result);
+
+    	$view .= "<input type=\"text\" id=\"adm_name\" value=\"".$row['adm_name']."\">";
+    	$view .= "<input type=\"password\" id=\"adm_password\" value=\"".$row['adm_password']."\">";
+    	$view .= "<input type=\"text\" id=\"adm_email\" value=\"".$row['adm_email']."\">";
+    	$view .= "<input type=\"text\" id=\"adm_number\" value=\"".$row['adm_number']."\">"; 
+    	$view .= "<button id=\"btn_save\">Сохранить</button>";
+
+    return $view;
+    }
+
+    public function viewOrders () 
+    {   
+      	$result = self::getOrders();
+      	$row = mysqli_fetch_assoc($result);
+
+      	$view .='<div id="form-my-data">';
+    	$view .='<p>'.$result['o_name'].'</p>';
+    	$view .='<p>'.$result['o_number'].'</p>';
+    	$view .='<p>'.$result['o_service'].'</p>';
+    	$view .='<p>'.$result['o_comment'].'</p>';
+    	$view .='<div id="error"></div></div>';
+
+      	return $view;
+    }
 }
 ?>

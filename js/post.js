@@ -16,7 +16,7 @@ $('#btn_addservice').click(function(){
 
 	$.ajax({
     	type : 'POST',
-    	url : 'posts.php',
+    	url : '../assets/posts.php',
     	data : {service_name:service_name,min_description:min_description,full_description:full_description,category:category,country:country,areal:areal,city:city,cat_id:cat_id},
     	success : function(data) {
     		if (data==1) {            
@@ -36,7 +36,7 @@ $('#add_cat_btn').click(function(){
 	var cat_name = $('#cat_name').val();
 	$.ajax({
     	type : 'POST',
-    	url : 'posts.php',
+    	url : '../assets/posts.php',
     	data : {cat_name:cat_name},
     	success : function(data) {
     		if (data==1) {          
@@ -61,7 +61,7 @@ $('#btn_save').click(function(){
 
 	 	$.ajax({
     		type : 'POST',
-    		url : 'posts.php',
+    		url : '../assets/posts.php',
     		data : {adm_name:adm_name,adm_password:adm_password,adm_email:adm_email,adm_number:adm_number},
     		success : function(data) {
     		    if (data==1) {            

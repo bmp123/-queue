@@ -51,6 +51,12 @@ header > a{
 	margin: 15px 5px;
 	background: #64B5F6;
 }
+#category > ul > li > div{
+	margin: -20px 5px;
+	background: none;
+	text-align: right;
+	font-size: 12px;
+}
 #category > ul > li:first-child{
 	margin: 0px 5px;
 }
@@ -61,6 +67,9 @@ header > a{
 }
 #category > ul > li > a:hover{
 	background: #90CAF9;
+}
+#body{
+	min-height: 500px;
 }
 #wrapper_cat{
 	margin-top: 50px;
@@ -144,5 +153,20 @@ header > a{
 }
 #btn-search:focus{
 	outline: none;
+<<<<<<< HEAD
 >>>>>>> dev
 }
+=======
+}
+footer{
+	width: 100%;
+	height: 250px;
+	background: #212121;
+}
+footer > p{
+	position: absolute;
+	margin-top: 225px;
+	background: none;
+	color: #ffffff;
+}
+>>>>>>> dev

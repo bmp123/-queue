@@ -69,12 +69,6 @@ class Values extends View
         return $reload;
     }
 
-    public function home ()
-    {
-        $view = '<script language="JavaScript">window.location.href = "http://www.u.ru"</script>';
-        return $view;
-    }
-
     public function getFun () 
     {   
         $url = $_GET['url'];

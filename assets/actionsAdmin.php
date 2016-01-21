@@ -2,9 +2,9 @@
 /**
 * Операции в админке
 */
-include("functions.php");
+include("db.php");
 
-class actionsAdmin extends Gets
+class actionsAdmin extends db
 {
   
   function add_category($name)
@@ -62,6 +62,7 @@ class actionsAdmin extends Gets
     return $i;
   }
 
+<<<<<<< HEAD
   static function myData ()
   { 
     $view .='<div id="form-my-data">';
@@ -117,13 +118,15 @@ class actionsAdmin extends Gets
       return $i;
   }
 =======
+=======
+>>>>>>> dev
     static function authAdmin ($email, $password)
     {  
         session_start();
         $table = "admins";
         $sql = "SELECT * FROM ".$table." WHERE adm_email = '".$email."'";
         if (!empty($email) && !empty($password)) {
-            $result = Gets::getSql($sql);
+            $result = self::getSql($sql);
             $row = mysqli_fetch_assoc($result);
           
             $password2 = $row['adm_password'];
@@ -141,29 +144,6 @@ class actionsAdmin extends Gets
         return $i;
     }
 >>>>>>> dev
-
-  static function getOrders () 
-  {
-    session_start();
-      $id = $_SESSION['id'];
-      $sql = "SELECT * FROM orders WHERE adm_id = '$id'";
-      if($result = Gets::getSql($sql)) $row = mysqli_fetch_assoc($result);
-
-      return $row;
-  }
-
-    static function viewOrders () 
-    {   
-      $result = self::getOrders();
-      $view .='<div id="form-my-data">';
-    $view .='<p>'.$result['o_name'].'</p>';
-    $view .='<p>'.$result['o_number'].'</p>';
-    $view .='<p>'.$result['o_service'].'</p>';
-    $view .='<p>'.$result['o_comment'].'</p>';
-    $view .='<div id="error"></div></div>';
-
-      return $view;
-    }
 
 }
 

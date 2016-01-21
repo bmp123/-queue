@@ -5,7 +5,7 @@
 class db
 {
 	
-	function dbConnect ()
+	protected function dbConnect ()
 	{
 		/* Подключение к серверу MySQL */ 
 		$link = mysqli_connect( 
@@ -21,5 +21,37 @@ class db
 			return $link;
 		}
 	}
+
+	function getSql ($sql)
+	{
+		$link = self::dbConnect();
+		/* Посылаем запрос серверу */ 
+		if ($result = mysqli_query($link, $sql)) { 
+    		/* Выборка результатов запроса */ 
+    		return $result;
+    		/* Освобождаем используемую память */ 
+    		mysqli_free_result($result); 
+		} 
+
+		/* Закрываем соединение */ 
+		mysqli_close($link); 
+	}
+
+	function getCategory($table) 
+	{
+		$sql    = 'SELECT * FROM '.$table.' GROUP BY `cat_name` ORDER BY `cat_name` ASC ';
+		$result =  self::getSql($sql);
+		
+		return $result;
+	}
+
+	function getOrders () 
+  	{
+    	session_start();
+      	$id = $_SESSION['id'];
+      	$sql = "SELECT * FROM orders WHERE adm_id = '$id'";
+      	if($result = self::getSql($sql)) return $row;
+ 	}		
+
 }
 ?>

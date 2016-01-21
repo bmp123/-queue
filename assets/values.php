@@ -4,10 +4,10 @@
 */
 include ("functions.php");
 
-class Values extends Gets
+class Values extends View
 {
     
-    function request_url()
+    public function request_url()
     {
         $result = ''; // Пока результат пуст
         $default_port = 80; // Порт по-умолчанию
@@ -37,7 +37,7 @@ class Values extends Gets
         return $url;
     }
 
-    function session () 
+    public function session () 
     {
         session_start();
         $id = $_SESSION['id'];
@@ -47,7 +47,7 @@ class Values extends Gets
         if (!empty($id)) {
             $table = "admins";
             $sql = "SELECT * FROM ".$table." WHERE adm_id ='".$id."' LIMIT 1 ";
-            $result = Gets::getSql($sql);
+            $result = db::getSql($sql);
             $row = mysqli_fetch_assoc($result);
 
             if ( $password == $row['adm_password'] && $email == $row['adm_email']) {
@@ -61,13 +61,28 @@ class Values extends Gets
         return $flag;
     }
 
-    function getFun () 
+    public function destroySession ()
+    {
+        session_start();
+        session_destroy();
+        $reload = '<script language="JavaScript">window.location.href = "http://www.u.ru/admin/"</script>';
+        return $reload;
+    }
+
+    public function home ()
+    {
+        $view = '<script language="JavaScript">window.location.href = "http://www.u.ru"</script>';
+        return $view;
+    }
+
+    public function getFun () 
     {   
         $url = $_GET['url'];
-        $view = Gets::$url();
+        $view = View::$url();
 
         return $view;
     }
+
 }
 
 ?>

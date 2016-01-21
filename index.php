@@ -14,9 +14,12 @@
 	</header>
 	<div id="search">
 		<div id="search-panel">
-			<input type="text" name="category" class="search-inp" id="search-category" value="category">
-			<input type="text" name="city" class="search-inp" id="search-city" value="city">
-			<button id="btn-search">Найти</button>
+			<form method="get">
+				<input type="hidden" name="url" value="viewSearch">
+				<input type="text" name="s_category" class="search-inp" id="search-category" value="category">
+				<input type="text" name="s_city" class="search-inp" id="search-city" value="city">
+				<button id="btn-search">Найти</button>
+			<form>
 		</div>
 	</div>
 	<!-- <div id="menu">
@@ -29,9 +32,13 @@
 	</div> -->
 	<div id="body">
 		<?if (isset($_GET['url'])) echo Values::getFun(); if(!isset($_GET['url'])) echo Values::viewCategory();?>
+
+		<div>
+			
+		</div>
 	</div>
 	<footer>
-
+		<p class="copyright">&copy; Ivan Danilov</p>
 	</footer>
 </body>
 </html>
@@ -43,3 +50,24 @@
 		echo "<script type=\"text/javascript\">document.getElementById('wrapper_cat').style.display = \"none\";document.getElementById('wrapper_ind').style.display = \"block\";</script>";
 	}
 ?>
+<script type="text/javascript">
+$('#btn-search').click(function () {
+	var category = $('#search-category').val(),
+		city = $('#search-city').val();
+	
+	$.ajax({
+    	type : 'POST',
+    	url : '../assets/search.php',
+    	data : {s_category:category,s_city:city},
+    	success : function(data) {console.log(data);
+    		if (data==1) {          
+    			
+				$("#error").text("Отправленна");
+    		}else if(data==2){
+    			$("#error").text("Не отправлена");
+    		}
+
+    	}
+	});
+});
+</script>

@@ -48,7 +48,7 @@ class View extends db
 
 	public function viewCategory ()
 	{
-		$table  = "category,services";
+		$table  = "category";
 		$result    = db::getCategory($table);
 		$row    =  mysqli_fetch_assoc($result);
 
@@ -58,6 +58,35 @@ class View extends db
 			if ($num > 1) { $num-= 1; $view .= "<li><a href=\"?url=viewServices&&id=".$row['cat_id']."\">".$row['cat_name']."</a><div>".$num."</div></li>";} 
 		} while ($row = mysqli_fetch_assoc($result));
 		$view .= "</ul></div>";
+
+		return $view;
+	}
+
+	public function viewSearch()
+	{
+		$table_c  = "category";
+		$category = $_GET['s_category'];
+		$city = $_GET['s_city'];
+
+		$sql_c = "SELECT * FROM ".$table_c." WHERE cat_name = '".$category."'";
+		$result_c = db::getSql($sql_c);
+		$row_c =  mysqli_fetch_assoc($result_c);
+		$id_c = $row_c['cat_id'];
+
+		$table  = "services";
+		$sql = "SELECT * FROM ".$table." WHERE cat_id = '".$id_c."' OR s_city = '".$city."'";
+		$result = db::getSql($sql);
+		$row =  mysqli_fetch_assoc($result);
+
+		$view .= "<div id=\"wrapper_cat\">";
+		do{ 
+			$view .= "<div class=\"cat_divs\">";
+			$view .= "<p>".$row['s_name']."</p>";
+			$view .= "<p>".$row['s_m_descr']."</p>";
+			$view .= "<a href=\"?url=viewIndividual&&id=".$row['id']."&&name=".$row['s_name']."\">Подробнее</a>";
+			$view .= "</div>"; 
+		} while ($row = mysqli_fetch_assoc($result)); 
+		$view .= "</div>";
 
 		return $view;
 	}
@@ -161,6 +190,12 @@ class View extends db
     	$view .='<div id="error"></div></div>';
 
       	return $view;
+    }
+
+    public function home ()
+    {
+        $view = '<script language="JavaScript">window.location.href = "http://www.u.ru"</script>';
+        return $view;
     }
 }
 ?>
